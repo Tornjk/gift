@@ -1,0 +1,13 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Gift.View;assembly=Gift"
+        Icon="resm:Gift.Assets.avalonia-logo.ico"
+        Title="Gift">
+  <Grid ColumnDefinitions="*,*">
+    <local:FriendListView Name="FriendListView" />
+    <TextBlock Text="Hello World"
+               Grid.Column="1"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+  </Grid>
+</Window>

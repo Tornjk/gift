@@ -1,7 +1,8 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Gift.ViewModels;
+using Gift.ViewModel;
+using ReactiveUI;
 
 namespace Gift
 {
@@ -26,7 +27,7 @@ namespace Gift
 
         public bool Match(object data)
         {
-            return data is ViewModelBase;
+            return data is ReactiveObject;
         }
     }
 }

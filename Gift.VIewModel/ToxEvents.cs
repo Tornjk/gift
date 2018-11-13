@@ -61,7 +61,7 @@ namespace Gift.ViewModel
                              .Select(x => x.EventArgs);
 
             public IObservable<ToxEventArgs.GroupTitleEventArgs> TitleChanged
-                => Observable.FromEventPattern<ToxEventArgs.GroupTitleEventArgs>(h => tox.OnGroupTitleChanged += h, tox.OnGroupTitleChanged -= h)
+                => Observable.FromEventPattern<ToxEventArgs.GroupTitleEventArgs>(h => tox.OnGroupTitleChanged += h, h => tox.OnGroupTitleChanged -= h)
                              .Select(x => x.EventArgs);
         }
 

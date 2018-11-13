@@ -1,8 +1,8 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Logging.Serilog;
-using Gift.ViewModels;
-using Gift.Views;
+using Gift.ViewModel;
+using Gift.View;
 
 namespace Gift
 {
