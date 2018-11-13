@@ -38,12 +38,14 @@ namespace Gift.ViewModel
                 .Where(x => x.FriendNumber == friendNumber)
                 .Select(x => x.Name)
                 .StartWith(tox.GetFriendName(friendNumber))
+                //.ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.Name);
 
             tox.Events().Friends.StatusMessageChanged
                 .Where(x => x.FriendNumber == friendNumber)
                 .Select(x => x.StatusMessage)
                 .StartWith(tox.GetFriendStatusMessage(friendNumber))
+                //.ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.StatusMessage);
         }
 

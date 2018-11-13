@@ -4,6 +4,7 @@ using SharpTox.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 
@@ -19,13 +20,12 @@ namespace Gift.ViewModel
             {
                 using (var t = new Tox(ToxOptions.Default))
                 {
-                    var key = t.GetPrivateKey();
-                    File.WriteAllBytes(profilePath, key.GetBytes());
+                    t.GetData().Save(profilePath);
                 }
             }
 
-            var data = File.ReadAllBytes(profilePath);
-            var tox = new Tox(ToxOptions.Default, new ToxKey(ToxKeyType.Secret, data));
+            var data = ToxData.FromDisk(profilePath);
+            var tox = new Tox(new ToxOptions(true, true), data);
 
             foreach(var node in Nodes)
             {

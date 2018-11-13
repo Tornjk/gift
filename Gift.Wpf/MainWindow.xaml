@@ -1,12 +1,16 @@
-﻿<Window x:Class="Gift.Wpf.MainWindow"
+﻿<rx:ReactiveWindow x:Class="Gift.Wpf.MainWindow"
+        x:TypeArguments="vm:MainWindowViewModel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:rx="http://reactiveui.net"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gift.Wpf"
+        xmlns:v="clr-namespace:Gift.Wpf.View"
+        xmlns:vm="clr-namespace:Gift.ViewModel;assembly=Gift.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <v:FriendListView x:Name="FriendListView"/>
     </Grid>
-</Window>
+</rx:ReactiveWindow>
