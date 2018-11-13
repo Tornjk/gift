@@ -39,13 +39,19 @@ namespace Gift.ViewModel
                 Thread.Sleep(40);
             }
 
-            const string TornJKToxID = "737AD30A0BA6D0172E025BD05EDB27EEEE0913F207867B7A43C438BDAD128C151CE865D7D560";
-            var friendid = tox.AddFriend(new ToxId(TornJKToxID), "Hello from Gift!");
+            this.Friends = new FriendListViewModel(tox);
+            this.FriendAdd = new FriendAddViewModel(tox);
+            this.Profile = new ProfileViewModel(tox);
 
-            this.Friends = new FriendListViewModel(tox, new[] { friendid });
+            this.WhenAnyObservable(x => x.FriendAdd.Add)
+                .InvokeCommand(this, x => x.Friends.Add);
         }
 
         public FriendListViewModel Friends { get; }
+
+        public FriendAddViewModel FriendAdd { get; }
+
+        public ProfileViewModel Profile { get; }
 
         private static readonly ToxNode[] Nodes = new ToxNode[]
         {

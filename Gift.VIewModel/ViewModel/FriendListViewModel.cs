@@ -6,17 +6,49 @@ using System.Collections.Generic;
 using ReactiveUI.Fody.Helpers;
 using System.Reactive.Linq;
 using System.Linq;
+using DynamicData;
+using System.Reactive;
+using System.Collections.ObjectModel;
+using DynamicData.Binding;
 
 namespace Gift.ViewModel
 {
     public class FriendListViewModel : ReactiveObject
     {
-        public FriendListViewModel(Tox tox, ICollection<int> friends)
+        public FriendListViewModel(Tox tox)
         {
-            this.Friends = friends.Select(x => new FriendListEntryViewModel(tox, x)).ToArray();
+            var friends = new SourceList<int>();
+
+            this.Add = ReactiveCommand.Create<int>(friendNumber =>
+            {
+                friends.Add(friendNumber);
+            });
+
+            ReadOnlyObservableCollection<FriendListEntryViewModel> entries;
+            friends.Connect()
+                .Transform(number => new FriendListEntryViewModel(tox, number))
+                .Bind(out entries)
+                .Subscribe();
+
+            this.Friends = entries;
+
+            this.Friends.ToObservableChangeSet()
+                .MergeMany(x => x.Remove)
+                .Subscribe(number =>
+                {
+                    if (tox.DeleteFriend(number))
+                    {
+                        friends.Remove(number);
+                    }
+                });
         }
 
-        public ICollection<FriendListEntryViewModel> Friends { get; }
+        [Reactive]
+        public string Filter { get; set; }
+
+        public ReactiveCommand<int, Unit> Add { get; }
+
+        public ReadOnlyObservableCollection<FriendListEntryViewModel> Friends { get; }
     }
 
     public class FriendListEntryViewModel : ReactiveObject
@@ -38,15 +70,15 @@ namespace Gift.ViewModel
                 .Where(x => x.FriendNumber == friendNumber)
                 .Select(x => x.Name)
                 .StartWith(tox.GetFriendName(friendNumber))
-                //.ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.Name);
 
             tox.Events().Friends.StatusMessageChanged
                 .Where(x => x.FriendNumber == friendNumber)
                 .Select(x => x.StatusMessage)
                 .StartWith(tox.GetFriendStatusMessage(friendNumber))
-                //.ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.StatusMessage);
+
+            this.Remove = ReactiveCommand.Create(() => friendNumber);
         }
 
         [ObservableAsProperty]
@@ -60,5 +92,7 @@ namespace Gift.ViewModel
 
         [ObservableAsProperty]
         public string StatusMessage { get; }
+
+        public ReactiveCommand<Unit, int> Remove { get; }
     }
 }

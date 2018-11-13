@@ -1,5 +1,4 @@
-﻿using Gift.ViewModel;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +9,16 @@ using System.Windows.Controls;
 
 namespace Gift.Wpf.View
 {
-    public partial class FriendListView
+    public partial class FriendAddView
     {
-        public FriendListView()
+        public FriendAddView()
         {
             InitializeComponent();
 
             this.WhenActivated(d =>
             {
-                d(this.OneWayBind(this.ViewModel, x => x.Friends, x => x.FriendListBox.ItemsSource));
+                d(this.Bind(this.ViewModel, x => x.ID, x => x.IdTextBox.Text));
+                d(this.BindCommand(this.ViewModel, x => x.Add, x => x.AddButton));
             });
         }
     }

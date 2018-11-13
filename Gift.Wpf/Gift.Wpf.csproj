@@ -59,11 +59,17 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Compile Include="Program.cs" />
+    <Compile Include="View\FriendAddView.xaml.cs">
+      <DependentUpon>FriendAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\FriendListEntryView.xaml.cs">
       <DependentUpon>FriendListEntryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FriendListView.xaml.cs">
       <DependentUpon>FriendListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -77,10 +83,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\FriendAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\FriendListEntryView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FriendListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProfileView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
