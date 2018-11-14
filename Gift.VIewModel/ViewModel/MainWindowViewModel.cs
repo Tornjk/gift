@@ -45,6 +45,10 @@ namespace Gift.ViewModel
 
             this.WhenAnyObservable(x => x.FriendAdd.Add)
                 .InvokeCommand(this, x => x.Friends.Add);
+
+            this.WhenAnyObservable(x => x.Profile.Changed)
+                .Throttle(TimeSpan.FromSeconds(3))
+                .Subscribe(_ => tox.GetData().Save(profilePath));
         }
 
         public FriendListViewModel Friends { get; }
