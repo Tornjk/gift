@@ -1,15 +1,15 @@
-﻿using ReactiveUI;
-using System;
+﻿using DynamicData;
+using DynamicData.Binding;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using SharpTox;
 using SharpTox.Core;
+using System;
 using System.Collections.Generic;
-using ReactiveUI.Fody.Helpers;
-using System.Reactive.Linq;
-using System.Linq;
-using DynamicData;
-using System.Reactive;
 using System.Collections.ObjectModel;
-using DynamicData.Binding;
+using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 
 namespace Gift.ViewModel
 {
@@ -46,6 +46,9 @@ namespace Gift.ViewModel
         [Reactive]
         public string Filter { get; set; }
 
+        [Reactive]
+        public FriendListEntryViewModel SelectedFriend { get; set; }
+
         public ReactiveCommand<int, Unit> Add { get; }
 
         public ReadOnlyObservableCollection<FriendListEntryViewModel> Friends { get; }
@@ -79,6 +82,7 @@ namespace Gift.ViewModel
                 .ToPropertyEx(this, x => x.StatusMessage);
 
             this.Remove = ReactiveCommand.Create(() => friendNumber);
+            this.Conversation = new FriendConversationViewModel(tox, friendNumber);
         }
 
         [ObservableAsProperty]
@@ -94,5 +98,7 @@ namespace Gift.ViewModel
         public string StatusMessage { get; }
 
         public ReactiveCommand<Unit, int> Remove { get; }
+
+        public FriendConversationViewModel Conversation { get; }
     }
 }

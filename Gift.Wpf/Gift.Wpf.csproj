@@ -62,11 +62,17 @@
     <Compile Include="View\FriendAddView.xaml.cs">
       <DependentUpon>FriendAddView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\FriendConversationView.xaml.cs">
+      <DependentUpon>FriendConversationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\FriendListEntryView.xaml.cs">
       <DependentUpon>FriendListEntryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FriendListView.xaml.cs">
       <DependentUpon>FriendListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProfileView.xaml.cs">
       <DependentUpon>ProfileView.xaml</DependentUpon>
@@ -86,10 +92,16 @@
     <Page Include="View\FriendAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\FriendConversationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\FriendListEntryView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FriendListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MessageView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ProfileView.xaml">

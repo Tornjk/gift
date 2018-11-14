@@ -19,6 +19,7 @@ namespace Gift.Wpf.View
             this.WhenActivated(d =>
             {
                 d(this.OneWayBind(this.ViewModel, x => x.Friends, x => x.FriendListBox.ItemsSource));
+                d(this.Bind(this.ViewModel, x => x.SelectedFriend, x => x.FriendListBox.SelectedItem));
             });
         }
     }

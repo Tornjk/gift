@@ -30,6 +30,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <v:FriendListView x:Name="FriendListView"/>
+            <v:FriendConversationView x:Name="ConversationView"
+                                      Grid.Column="1"/>
         </Grid>
     </Grid>
 </rx:ReactiveWindow>
