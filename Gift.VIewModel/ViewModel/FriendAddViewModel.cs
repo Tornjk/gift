@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Gift.ViewModel
 {
-    public class FriendAddViewModel : ReactiveObject
+    public class FriendAddViewModel : ViewModelBase
     {
         public FriendAddViewModel(Tox tox)
         {

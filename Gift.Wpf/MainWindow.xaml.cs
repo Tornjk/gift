@@ -17,10 +17,8 @@ namespace Gift.Wpf
 
             this.WhenActivated(d =>
             {
-                d(this.OneWayBind(this.ViewModel, x => x.Friends, x => x.FriendListView.ViewModel));
-                d(this.OneWayBind(this.ViewModel, x => x.Profile, x => x.ProfileView.ViewModel));
-                d(this.OneWayBind(this.ViewModel, x => x.FriendAdd, x => x.FriendAddView.ViewModel));
-                d(this.OneWayBind(this.ViewModel, x => x.Friends.SelectedFriend.Conversation, x => x.ConversationView.ViewModel));
+                //d(this.OneWayBind(this.ViewModel, x => x.Current, x => x.ViewModelHost.ViewModel));
+                d(this.WhenAnyObservable(x => x.ViewModel.Current).BindTo(this, x => x.ViewModelHost.ViewModel));
             });
         }
     }

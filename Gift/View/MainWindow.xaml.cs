@@ -21,7 +21,7 @@ namespace Gift.View
 
             this.WhenActivated(d =>
             {
-                d(this.OneWayBind(this.ViewModel, x => x.Friends, x => x.FriendListView.ViewModel));
+                //d(this.OneWayBind(this.ViewModel, x => x.Friends, x => x.FriendListView.ViewModel));
             });
         }
 

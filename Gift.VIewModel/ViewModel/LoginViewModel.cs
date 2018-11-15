@@ -14,9 +14,9 @@ using System.Text;
 
 namespace Gift.ViewModel
 {
-    public sealed class LoginViewModel : ReactiveObject
+    public sealed class LoginViewModel : ViewModelBase
     {
-        const string UserDataSubdirectory = "tox";
+        const string UserDataSubdirectory = "gift";
 
         public LoginViewModel()
         {
@@ -24,7 +24,7 @@ namespace Gift.ViewModel
 
             this.WhenAnyValue(x => x.UserProfilesDirectory)
                 .Where(x => Directory.Exists(x))
-                .Select(x => Directory.EnumerateFiles("*.tox").AsObservableChangeSet())
+                .Select(x => Directory.EnumerateFiles(x, "*.tox").AsObservableChangeSet())
                 .Switch()
                 .Transform(x => (IProfileViewModel)new ExistingUserProfileViewModel(x, ToxData.FromDisk(x)))
                 .PopulateInto(profiles);

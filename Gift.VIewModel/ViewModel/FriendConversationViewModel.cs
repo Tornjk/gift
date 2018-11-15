@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Gift.ViewModel
 {
-    public sealed class FriendConversationViewModel : ReactiveObject
+    public sealed class FriendConversationViewModel : ViewModelBase
     {
         public FriendConversationViewModel(Tox tox, int friendNumber)
         {

@@ -13,7 +13,7 @@ using System.Reactive.Linq;
 
 namespace Gift.ViewModel
 {
-    public class FriendListViewModel : ReactiveObject
+    public class FriendListViewModel : ViewModelBase
     {
         public FriendListViewModel(Tox tox)
         {

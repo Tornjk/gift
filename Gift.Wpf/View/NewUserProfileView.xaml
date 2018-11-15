@@ -1,0 +1,20 @@
+﻿<rx:ReactiveUserControl x:Class="Gift.Wpf.View.NewUserProfileView"
+                        x:TypeArguments="vm:NewUserProfileViewModel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:rx="http://reactiveui.net"
+             xmlns:vm="clr-namespace:Gift.ViewModel;assembly=Gift.ViewModel"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gift.Wpf.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel MinWidth="200"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+        <TextBox x:Name="NameTextBox"/>
+        <TextBox x:Name="PasswordTextBox"/>
+        <Button x:Name="CreateButton"
+                Content="Create"/>
+    </StackPanel>
+</rx:ReactiveUserControl>
