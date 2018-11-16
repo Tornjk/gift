@@ -12,6 +12,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <rx:ViewModelViewHost x:Name="ViewModelHost"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"/>
     </Grid>

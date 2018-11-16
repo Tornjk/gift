@@ -1,4 +1,4 @@
-﻿<rx:ReactiveUserControl x:Class="Gift.Wpf.View.LoginView"
+<rx:ReactiveUserControl x:Class="Gift.Wpf.View.LoginView"
                         x:TypeArguments="vm:LoginViewModel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -23,7 +23,15 @@
             <Button x:Name="CreateNew"
                     Content="New"/>
             <ListBox x:Name="AvailableList"
-                     Grid.Row="1"/>
+                     Grid.Row="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
         <rx:ViewModelViewHost x:Name="ProfileViewHost"
                               Grid.Column="1"/>

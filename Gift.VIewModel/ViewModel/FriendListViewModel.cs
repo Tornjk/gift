@@ -19,6 +19,12 @@ namespace Gift.ViewModel
         {
             var friends = new SourceList<int>();
 
+            foreach(var friend in tox.Friends)
+            {
+                friends.Add(friend);
+                tox.AddFriendNoRequest(tox.GetFriendPublicKey(friend));
+            }
+
             this.Add = ReactiveCommand.Create<int>(friendNumber =>
             {
                 friends.Add(friendNumber);
