@@ -17,7 +17,7 @@ namespace Gift.ViewModel
                 throw new ArgumentNullException(nameof(tox));
             }
 
-            this.Add = ReactiveCommand.Create(() => tox.AddFriend(new ToxId(this.ID), this.Message), this.WhenAnyValue(x => x.ID, (string id) => ToxId.IsValid(id)));
+            this.Add = ReactiveCommand.Create(() => tox.AddFriend(new ToxId(this.ID), this.Message, out _), this.WhenAnyValue(x => x.ID, (string id) => ToxId.IsValid(id)));
         }
 
         [Reactive]
@@ -26,6 +26,6 @@ namespace Gift.ViewModel
         [Reactive]
         public string Message { get; set; } = "Hello from Gift!";
 
-        public ReactiveCommand<Unit, int> Add { get; }
+        public ReactiveCommand<Unit, uint> Add { get; }
     }
 }

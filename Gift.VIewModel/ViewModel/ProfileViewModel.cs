@@ -9,10 +9,10 @@ namespace Gift.ViewModel
     public sealed class ProfileViewModel : ReactiveObject
     {
         [Reactive]
-        public string Name { get; set; } = "TornJK";
+        public string Name { get; set; }
 
         [Reactive]
-        public string StatusMessage { get; set; } = "Toxing with Gift";
+        public string StatusMessage { get; set; }
 
         public ProfileViewModel(Tox tox)
         {

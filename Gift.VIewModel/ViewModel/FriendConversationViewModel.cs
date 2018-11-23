@@ -13,7 +13,7 @@ namespace Gift.ViewModel
 {
     public sealed class FriendConversationViewModel : ViewModelBase
     {
-        public FriendConversationViewModel(Tox tox, int friendNumber)
+        public FriendConversationViewModel(Tox tox, uint friendNumber)
         {
             var messages = new SourceList<MessageViewModel>();
 
@@ -28,7 +28,7 @@ namespace Gift.ViewModel
             {
                 if (!string.IsNullOrWhiteSpace(msg))
                 {
-                    _ = tox.SendMessage(friendNumber, msg, ToxMessageType.Message);
+                    _ = tox.SendMessage(friendNumber, msg, ToxMessageType.Message, out _);
                     messages.Add(new MessageViewModel("Me", msg, DateTime.Now.Ticks));
                 }
             });
@@ -49,15 +49,15 @@ namespace Gift.ViewModel
             this.WhenAnyValue(x => x.InputMessage)
                 .Select(msg => !string.IsNullOrWhiteSpace(msg))
                 .Where(x => x)
-                .Do(_ => tox.SetTypingStatus(friendNumber, true))
+                .Do(x => tox.SetTypingStatus(friendNumber, true, out _))
                 .Throttle(TimeSpan.FromMilliseconds(500))
-                .Subscribe(_ => tox.SetTypingStatus(friendNumber, false));
+                .Subscribe(x => tox.SetTypingStatus(friendNumber, false, out _));
 
             tox.Events().Friends
                 .Message
                 .Where(x => x.FriendNumber == friendNumber && x.MessageType == ToxMessageType.Message)
                 .Select(x => x.Message)
-                .Subscribe(msg => messages.Add(new MessageViewModel(tox.GetFriendName(friendNumber), msg, DateTime.Now.Ticks)));
+                .Subscribe(msg => messages.Add(new MessageViewModel(tox.GetFriendName(friendNumber, out _), msg, DateTime.Now.Ticks)));
 
             this.WhenAnyObservable(x => x.SendTypedMessage)
                 .InvokeCommand(this, x => x.SendMessage);

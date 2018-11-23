@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Security;
 using System.Text;
 using System.Threading;
 
@@ -30,7 +31,10 @@ namespace Gift.ViewModel
                     {
                         foreach (var node in Nodes)
                         {
-                            session.Tox.Bootstrap(node);
+                            if (!session.Tox.Bootstrap(node, out _))
+                            {
+                                throw new Exception();
+                            }
                         }
 
                         session.Tox.Start();
@@ -56,6 +60,9 @@ namespace Gift.ViewModel
 
         [ObservableAsProperty]
         public bool Preparing { get; }
+
+        [ObservableAsProperty]
+        public bool IsConnected { get; }
 
         private static readonly ToxNode[] Nodes = new ToxNode[]
         {

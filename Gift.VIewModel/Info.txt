@@ -1,0 +1,6 @@
+﻿In beginning to have atleast a semi reproducable state of this software:
+
+I use my own SharpTox Fork as basis (model)
+here the current hash of the version I develop against:
+
+ae88a21e55a006bd83569b9722938b0ae2ac0d4f

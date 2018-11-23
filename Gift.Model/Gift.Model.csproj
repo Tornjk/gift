@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiteDB" Version="4.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SharpTox">
+      <HintPath>..\..\SharpTox\SharpTox\bin\Release\netstandard2.0\SharpTox.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

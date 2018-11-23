@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gift.Model\Gift.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="SharpTox">
       <HintPath>..\..\bin\SharpTox\SharpTox.dll</HintPath>
     </Reference>

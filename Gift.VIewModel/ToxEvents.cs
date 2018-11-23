@@ -36,14 +36,14 @@ namespace Gift.ViewModel
 
             this.Friends = new ToxFriendObservables(tox, scheduler);
             this.Files = new ToxFileObservables(tox, scheduler);
-            this.Group = new ToxGroupObservables(tox, scheduler);
+            this.Conference = new ToxConferenceObservables(tox, scheduler);
         }
 
         public ToxFriendObservables Friends { get; }
 
         public ToxFileObservables Files { get; }
 
-        public ToxGroupObservables Group { get; }
+        public ToxConferenceObservables Conference { get; }
 
         public IObservable<ToxEventArgs.ConnectionStatusEventArgs> ConnectionStatus
             => Observable.FromEventPattern<ToxEventArgs.ConnectionStatusEventArgs>(h => tox.OnConnectionStatusChanged += h, h => tox.OnConnectionStatusChanged -= h)
@@ -55,39 +55,34 @@ namespace Gift.ViewModel
                          .Select(x => x.EventArgs)
                          .ObserveOn(this.scheduler);
 
-        public sealed class ToxGroupObservables
+        public sealed class ToxConferenceObservables
         {
             private readonly Tox tox;
             private readonly IScheduler scheduler;
 
-            public ToxGroupObservables(Tox tox, IScheduler scheduler)
+            public ToxConferenceObservables(Tox tox, IScheduler scheduler)
             {
                 this.tox = tox ?? throw new ArgumentNullException(nameof(tox));
                 this.scheduler = scheduler ?? throw new ArgumentNullException(nameof(scheduler));
             }
 
-            public IObservable<ToxEventArgs.GroupActionEventArgs> Action
-                => Observable.FromEventPattern<ToxEventArgs.GroupActionEventArgs>(h => tox.OnGroupAction += h, h => tox.OnGroupAction -= h)
+            public IObservable<ToxEventArgs.ConferenceMessageEventArgs> Message
+                => Observable.FromEventPattern<ToxEventArgs.ConferenceMessageEventArgs>(h => tox.OnConferenceMessage += h, h => tox.OnConferenceMessage -= h)
                              .Select(x => x.EventArgs)
                              .ObserveOn(this.scheduler);
 
-            public IObservable<ToxEventArgs.GroupMessageEventArgs> Message
-                => Observable.FromEventPattern<ToxEventArgs.GroupMessageEventArgs>(h => tox.OnGroupMessage += h, h => tox.OnGroupMessage -= h)
+            public IObservable<ToxEventArgs.ConferenceInviteEventArgs> Invite
+                => Observable.FromEventPattern<ToxEventArgs.ConferenceInviteEventArgs>(h => tox.OnConferenceInvite += h, h => tox.OnConferenceInvite -= h)
                              .Select(x => x.EventArgs)
                              .ObserveOn(this.scheduler);
 
-            public IObservable<ToxEventArgs.GroupInviteEventArgs> Invite
-                => Observable.FromEventPattern<ToxEventArgs.GroupInviteEventArgs>(h => tox.OnGroupInvite += h, h => tox.OnGroupInvite -= h)
+            public IObservable<ToxEventArgs.ConferencePeerNameEventArgs> PeerNameChange
+                => Observable.FromEventPattern<ToxEventArgs.ConferencePeerNameEventArgs>(h => tox.ConferencePeerNameChanged += h, h => tox.ConferencePeerNameChanged -= h)
                              .Select(x => x.EventArgs)
                              .ObserveOn(this.scheduler);
 
-            public IObservable<ToxEventArgs.GroupNamelistChangeEventArgs> NamelistChange
-                => Observable.FromEventPattern<ToxEventArgs.GroupNamelistChangeEventArgs>(h => tox.OnGroupNamelistChange += h, h => tox.OnGroupNamelistChange -= h)
-                             .Select(x => x.EventArgs)
-                             .ObserveOn(this.scheduler);
-
-            public IObservable<ToxEventArgs.GroupTitleEventArgs> TitleChanged
-                => Observable.FromEventPattern<ToxEventArgs.GroupTitleEventArgs>(h => tox.OnGroupTitleChanged += h, h => tox.OnGroupTitleChanged -= h)
+            public IObservable<ToxEventArgs.ConferenceTitleEventArgs> TitleChanged
+                => Observable.FromEventPattern<ToxEventArgs.ConferenceTitleEventArgs>(h => tox.OnConferenceTitleChanged += h, h => tox.OnConferenceTitleChanged -= h)
                              .Select(x => x.EventArgs)
                              .ObserveOn(this.scheduler);
         }

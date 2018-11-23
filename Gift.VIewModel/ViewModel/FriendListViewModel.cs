@@ -17,24 +17,24 @@ namespace Gift.ViewModel
     {
         public FriendListViewModel(Tox tox)
         {
-            var friends = new SourceList<int>();
+            var friends = new SourceList<uint>();
 
             foreach(var friend in tox.Friends)
             {
                 friends.Add(friend);
-                tox.AddFriendNoRequest(tox.GetFriendPublicKey(friend));
+                tox.AddFriendNoRequest(tox.GetFriendPublicKey(friend, out _), out _);
             }
 
-            this.Add = ReactiveCommand.Create<int>(friendNumber =>
+            this.Add = ReactiveCommand.Create<uint>(friendNumber =>
             {
                 friends.Add(friendNumber);
             });
 
             ReadOnlyObservableCollection<FriendListEntryViewModel> entries;
             friends.Connect()
-                .Transform(number => new FriendListEntryViewModel(tox, number))
-                .Bind(out entries)
-                .Subscribe();
+                   .Transform(number => new FriendListEntryViewModel(tox, number))
+                   .Bind(out entries)
+                   .Subscribe();
 
             this.Friends = entries;
 
@@ -42,7 +42,7 @@ namespace Gift.ViewModel
                 .MergeMany(x => x.Remove)
                 .Subscribe(number =>
                 {
-                    if (tox.DeleteFriend(number))
+                    if (tox.DeleteFriend(number, out _))
                     {
                         friends.Remove(number);
                     }
@@ -55,14 +55,14 @@ namespace Gift.ViewModel
         [Reactive]
         public FriendListEntryViewModel SelectedFriend { get; set; }
 
-        public ReactiveCommand<int, Unit> Add { get; }
+        public ReactiveCommand<uint, Unit> Add { get; }
 
         public ReadOnlyObservableCollection<FriendListEntryViewModel> Friends { get; }
     }
 
     public class FriendListEntryViewModel : ReactiveObject
     {
-        public FriendListEntryViewModel(Tox tox, int friendNumber)
+        public FriendListEntryViewModel(Tox tox, uint friendNumber)
         {
             //var publicKey = tox.GetFriendPublicKey(friendNumber);
             var status = tox.Events().Friends.StatusChanged
@@ -78,13 +78,13 @@ namespace Gift.ViewModel
             tox.Events().Friends.NameChanged
                 .Where(x => x.FriendNumber == friendNumber)
                 .Select(x => x.Name)
-                .StartWith(tox.GetFriendName(friendNumber))
+                .StartWith(tox.GetFriendName(friendNumber, out _))
                 .ToPropertyEx(this, x => x.Name);
 
             tox.Events().Friends.StatusMessageChanged
                 .Where(x => x.FriendNumber == friendNumber)
                 .Select(x => x.StatusMessage)
-                .StartWith(tox.GetFriendStatusMessage(friendNumber))
+                .StartWith(tox.GetFriendStatusMessage(friendNumber, out _))
                 .ToPropertyEx(this, x => x.StatusMessage);
 
             this.Remove = ReactiveCommand.Create(() => friendNumber);
@@ -103,7 +103,7 @@ namespace Gift.ViewModel
         [ObservableAsProperty]
         public string StatusMessage { get; }
 
-        public ReactiveCommand<Unit, int> Remove { get; }
+        public ReactiveCommand<Unit, uint> Remove { get; }
 
         public FriendConversationViewModel Conversation { get; }
     }

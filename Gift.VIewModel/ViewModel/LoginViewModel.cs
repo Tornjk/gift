@@ -103,11 +103,11 @@ namespace Gift.ViewModel
                 Tox tox = null;
                 if (this.Encrypted)
                 {
-                    tox = new Tox(ToxOptions.Default, this.Data, this.Password);
+                    tox = new Tox(ToxOptions.Default(), this.Data, this.Password);
                 }
                 else
                 {
-                    tox = new Tox(ToxOptions.Default, this.Data);
+                    tox = new Tox(ToxOptions.Default(), this.Data);
                 }
 
                 return new ToxSession(tox, filePath);
@@ -126,16 +126,16 @@ namespace Gift.ViewModel
             this.Login = ReactiveCommand.Create(() =>
             {
                 var filePath = Path.Combine(directory, this.Name + ".tox");
-                var tox = new Tox(ToxOptions.Default);
+                var tox = new Tox(ToxOptions.Default());
                 if (this.Encrypted)
                 {
                     var data = tox.GetData().Bytes;
-                    ToxEncryption.EncryptData(data, this.Password);
+                    ToxEncryption.Encrypt(data, this.Password, out _);
                     var toxdata = ToxData.FromBytes(data);
                     tox.Dispose();
                     toxdata.Save(filePath);
 
-                    tox = new Tox(ToxOptions.Default, toxdata, this.Password);
+                    tox = new Tox(ToxOptions.Default(), toxdata, this.Password);
                 }
 
                 return new ToxSession(tox, filePath);
